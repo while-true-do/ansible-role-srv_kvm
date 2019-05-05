@@ -23,12 +23,16 @@ def test_libvirt_service(host):
 
 
 def test_ksm_service(host):
-    srv = host.service('ksm')
-    assert srv.is_running
-    assert srv.is_enabled
+    vrt = host.ansible("setup")["ansible_facts"]["ansible_virtualization_type"]
+    if vrt != 'docker':
+        srv = host.service('ksm')
+        assert srv.is_running
+        assert srv.is_enabled
 
 
 def test_ksmtuned_service(host):
-    srv = host.service('ksmtuned')
-    assert srv.is_running
-    assert srv.is_enabled
+    vrt = host.ansible("setup")["ansible_facts"]["ansible_virtualization_type"]
+    if vrt != 'docker':
+        srv = host.service('ksmtuned')
+        assert srv.is_running
+        assert srv.is_enabled
