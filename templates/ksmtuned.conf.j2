@@ -1,0 +1,54 @@
+# {{ ansible_managed }}
+
+{% if wtd_srv_kvm_ksm_conf.MONITOR_INTERVAL is defined %}
+KSM_MONITOR_INTERVAL={{ wtd_srv_kvm_ksm_conf.MONITOR_INTERVAL }}
+{% else %}
+# KSM_MONITOR_INTERVAL=60
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.SLEEP_MSEC is defined %}
+KSM_SLEEP_MSEC={{ wtd_srv_kvm_ksm_conf.SLEEP_MSEC }}
+{% else %}
+# KSM_SLEEP_MSEC=10
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.NPAGES_BOOST is defined %}
+KSM_NPAGES_BOOST={{ wtd_srv_kvm_ksm_conf.NPAGES_BOOST }}
+{% else %}
+# KSM_NPAGES_BOOST=300
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.NPAGES_DECAY is defined %}
+KSM_NPAGES_DECAY={{ wtd_srv_kvm_ksm_conf.NPAGES_DECAY }}
+{% else %}
+# KSM_NPAGES_DECAY=-50
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.NPAGES_MIN is defined %}
+KSM_NPAGES_MIN={{ wtd_srv_kvm_ksm_conf.NPAGES_MIN }}
+{% else %}
+# KSM_NPAGES_MIN=64
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.NPAGES_MAX is defined %}
+KSM_NPAGES_MAX={{ wtd_srv_kvm_ksm_conf.NPAGES_MAX }}
+{% else %}
+# KSM_NPAGES_MAX=1250
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.THRES_COEF is defined %}
+KSM_THRES_COEF={{ wtd_srv_kvm_ksm_conf.THRES_COEF }}
+{% else %}
+# KSM_THRES_COEF=20
+{% endif %}
+
+{% if wtd_srv_kvm_ksm_conf.THRES_CONST is defined %}
+KSM_THRES_CONST={{ wtd_srv_kvm_ksm_conf.THRES_CONST }}
+{% else %}
+# KSM_THRES_CONST=2048
+{% endif %}
+
+# uncomment the following if you want ksmtuned debug info
+
+# LOGFILE=/var/log/ksmtuned
+# DEBUG=1

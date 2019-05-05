@@ -1,0 +1,26 @@
+---
+# handlers file for while_true_do.srv_kvm
+
+- name: Restart ksm Service
+  service:
+    name: "{{ item }}"
+    state: restarted
+  become: true
+  loop: "{{ wtd_srv_kvm_ksm_service }}"
+  tags:
+    - service
+    - ksm
+    - kvm
+    - virtualization
+
+- name: Reboot System
+  reboot:
+    msg: "{{ wtd_srv_kvm_reboot_msg }}"
+    reboot_timeout: "{{ wtd_srv_kvm_reboot_timeout }}"
+  become: true
+  when:
+    - ansible_virtualization_type != "docker"
+    - wtd_srv_kvm_reboot_enable
+  tags:
+    - kvm
+    - reboot

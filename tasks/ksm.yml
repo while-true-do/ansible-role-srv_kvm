@@ -1,0 +1,41 @@
+---
+# tasks file for while_true_do.srv_kvm
+
+- name: Manage ksm Packages
+  package:
+    name: "{{ wtd_srv_kvm_ksm_package }}"
+    state: "{{ wtd_srv_kvm_ksm_package_state }}"
+  become: true
+  tags:
+    - kvm
+    - ksm
+    - package
+    - virtualization
+
+- name: Configure ksmtuned.conf
+  template:
+    src: "ksmtuned.conf.j2"
+    dest: "/etc/ksmtuned.conf"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  notify: Restart ksm Service
+  tags:
+    - configuration
+    - kvm
+    - ksm
+    - virtualization
+
+- name: Manage ksm Service
+  service:
+    name: "{{ item }}"
+    state: "{{ wtd_srv_kvm_ksm_service_state }}"
+    enabled: "{{ wtd_srv_kvm_ksm_service_enabled }}"
+  become: true
+  loop: "{{ wtd_srv_kvm_ksm_service }}"
+  tags:
+    - service
+    - kvm
+    - ksm
+    - virtualization

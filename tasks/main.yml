@@ -1,0 +1,40 @@
+---
+# tasks file for while_true_do.srv_kvm
+
+- name: Include distribution Vars
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Manage kvm Packages
+  package:
+    name: "{{ wtd_srv_kvm_package }}"
+    state: "{{ wtd_srv_kvm_package_state }}"
+  become: true
+  notify: Reboot System
+  tags:
+    - kvm
+    - package
+    - virtualization
+
+- name: Manage libvirt Service
+  service:
+    name: "{{ wtd_srv_kvm_service }}"
+    state: "{{ wtd_srv_kvm_service_state }}"
+    enabled: "{{ wtd_srv_kvm_service_enabled }}"
+  become: true
+  tags:
+    - kvm
+    - libvirt
+    - service
+    - virtualization
+
+- name: Include ksm Tasks
+  include_tasks: ksm.yml
+  when:
+    - wtd_srv_kvm_ksm_manage
+    - wtd_srv_kvm_package_state != "absent"
+
+- name: Include kvm nested Tasks
+  include_tasks: kvm-nested.yml
+  when:
+    - wtd_srv_kvm_nested_manage
+    - wtd_srv_kvm_package_state != "absent"

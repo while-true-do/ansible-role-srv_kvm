@@ -1,0 +1,58 @@
+---
+# tasks file for while_true_do.srv_kvm
+
+- name: Check support for intel nesting
+  command: cat /sys/module/kvm_intel/parameters/nested
+  ignore_errors: true
+  changed_when: false
+  register: intel_nested
+  tags:
+    - kvm
+    - virtualization
+
+- name: Check support for amd nesting
+  command: cat /sys/module/kvm_amd/parameters/nested
+  ignore_errors: true
+  changed_when: false
+  register: amd_nested
+  tags:
+    - kvm
+    - virtualization
+
+- name: Configure kvm_intel Module
+  template:
+    src: modprobe.d.kvm_intel.conf.j2
+    dest: /etc/modprobe.d/kvm_intel.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: Reboot System
+  when:
+    - intel_nested.stdout == 0 or
+      intel_nested.stdout == "Y"
+  tags:
+    - kvm
+    - package
+    - virtualization
+    - module
+    - system
+
+- name: Configure kvm_amd Module
+  template:
+    src: modprobe.d.kvm_amd.conf.j2
+    dest: /etc/modprobe.d/kvm_amd.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: Reboot System
+  when:
+    - amd_nested.stdout == 0 or
+      amd_nested.stdout == "Y"
+  tags:
+    - kvm
+    - package
+    - virtualization
+    - module
+    - system

@@ -1,0 +1,33 @@
+---
+# meta file for while_true_do.srv_kvm
+galaxy_info:
+  role_name: srv_kvm
+  author: while-true-do.io
+  description: An Ansible Role to install and configure a kvm host.
+  license: BSD
+
+  min_ansible_version: 2.7
+
+  # Supported platforms: https://galaxy.ansible.com/api/v1/platforms/
+  # Please also maintain
+  # - molecule/default/molecule.yml
+  # - molecule/default/tests/test_default.py
+  platforms:
+    - name: EL
+      versions:
+        - 7
+
+    - name: Fedora
+      versions:
+        - 29
+
+  galaxy_tags:
+    - kvm
+    - ksm
+    - libvirt
+    - package
+    - service
+    - system
+    - virtualization
+
+dependencies: []

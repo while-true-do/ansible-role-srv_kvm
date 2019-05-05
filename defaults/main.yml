@@ -1,0 +1,47 @@
+---
+# defaults file for while_true_do.srv_kvm
+
+wtd_srv_kvm_package:
+  - qemu-kvm
+  - libvirt
+# State can be present|latest|absent
+wtd_srv_kvm_package_state: "present"
+
+wtd_srv_kvm_service: "libvirtd"
+# State can be started|stopped
+wtd_srv_kvm_service_state: "started"
+# Enabled can be true|false
+wtd_srv_kvm_service_enabled: true
+
+# Nested virtualization
+wtd_srv_kvm_nested_manage: true
+# State can be present|absent
+wtd_srv_kvm_nested_state: "present"
+
+# Kernel Samepage Merging
+wtd_srv_kvm_ksm_manage: true
+# Packages included dynamically
+wtd_srv_kvm_ksm_package:
+  - ksmtuned
+# State can be present|latest|absent
+wtd_srv_kvm_ksm_package_state: "present"
+wtd_srv_kvm_ksm_service:
+  - ksm
+  - ksmtuned
+# State can be started|stopped
+wtd_srv_kvm_ksm_service_state: "started"
+wtd_srv_kvm_ksm_service_enabled: true
+wtd_srv_kvm_ksm_conf:
+# MONITOR_INTERVAL: 60
+# SLEEP_MSEC: 10
+# NPAGES_BOOST: 300
+# NPAGES_DECAY: -50
+# NPAGES_MIN: 64
+# NPAGES_MAX: 1250
+# THRES_COEF: 20
+# THRES_CONST: 2048
+
+# Auto Reboot when needed
+wtd_srv_kvm_reboot_enable: true
+wtd_srv_kvm_reboot_msg: "System is going down to apply kvm configuration."
+wtd_srv_kvm_reboot_timeout: 3600
