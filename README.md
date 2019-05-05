@@ -34,8 +34,8 @@ This role configures a KVM hypervisor:
 
 -   install qemu-kvm
 -   install libvirt
--   install ksm support and service
--   install kvm nesting support
+-   install [ksm](https://www.linux-kvm.org/page/KSM) support and service
+-   install [kvm nesting](https://www.linux-kvm.org/page/Nested_Guests) support
 
 ## Requirements
 
