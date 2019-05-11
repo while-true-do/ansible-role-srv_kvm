@@ -80,13 +80,9 @@ wtd_srv_kvm_service_state: "started"
 # Enabled can be true|false
 wtd_srv_kvm_service_enabled: true
 
-# Nested virtualization
-wtd_srv_kvm_nested_manage: true
 # State can be present|absent
 wtd_srv_kvm_nested_state: "present"
 
-# Kernel Samepage Merging
-wtd_srv_kvm_ksm_manage: true
 # Packages included dynamically
 wtd_srv_kvm_ksm_package:
   - ksmtuned

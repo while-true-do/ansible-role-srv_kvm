@@ -30,11 +30,9 @@
 - name: Include ksm Tasks
   include_tasks: ksm.yml
   when:
-    - wtd_srv_kvm_ksm_manage
     - wtd_srv_kvm_package_state != "absent"
 
 - name: Include kvm nested Tasks
   include_tasks: kvm-nested.yml
   when:
-    - wtd_srv_kvm_nested_manage
     - wtd_srv_kvm_package_state != "absent"
