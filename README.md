@@ -138,6 +138,13 @@ Don't install ksm support and don't reboot after kvm nested configuration.
       wtd_srv_kvm_reboot_enable: false
 ```
 
+## Known Issues
+
+1.  RedHat Testing is currently not possible in public, due to limitations
+    in subscriptions.
+2.  Some services and features cannot be tested properly, due to limitations
+    in docker.
+
 ## Testing
 
 Most of the "generic" tests are located in the
