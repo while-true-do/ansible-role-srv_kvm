@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+# {{ ansible_managed | comment }}
 
 {% if wtd_srv_kvm_ksm_conf.MONITOR_INTERVAL is defined %}
 KSM_MONITOR_INTERVAL={{ wtd_srv_kvm_ksm_conf.MONITOR_INTERVAL }}
