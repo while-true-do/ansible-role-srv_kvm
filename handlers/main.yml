@@ -20,7 +20,7 @@
   become: true
   when:
     - ansible_virtualization_type != "docker"
-    - wtd_srv_kvm_reboot_enable
+    - wtd_srv_kvm_reboot_enabled
   tags:
     - kvm
     - reboot

@@ -3,6 +3,9 @@
 
 - name: Include distribution Vars
   include_vars: "{{ ansible_distribution }}.yml"
+  tags:
+    - kvm
+    - package
 
 - name: Manage kvm Packages
   package:
@@ -21,6 +24,8 @@
     state: "{{ wtd_srv_kvm_service_state }}"
     enabled: "{{ wtd_srv_kvm_service_enabled }}"
   become: true
+  when:
+    - wtd_srv_kvm_package_state != "absent"
   tags:
     - kvm
     - libvirt
@@ -31,8 +36,16 @@
   include_tasks: ksm.yml
   when:
     - wtd_srv_kvm_package_state != "absent"
+    - ansible_virtualization_type != "docker"
+  tags:
+    - kvm
+    - ksm
+    - virtualization
 
 - name: Include kvm nested Tasks
   include_tasks: kvm-nested.yml
   when:
     - wtd_srv_kvm_package_state != "absent"
+    - wtd_srv_kvm_conf_nested_enabled
+  tags:
+    - kvm

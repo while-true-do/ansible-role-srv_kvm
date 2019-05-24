@@ -35,7 +35,6 @@
     - kvm
     - package
     - virtualization
-    - module
     - system
 
 - name: Configure kvm_amd Module
@@ -54,5 +53,4 @@
     - kvm
     - package
     - virtualization
-    - module
     - system

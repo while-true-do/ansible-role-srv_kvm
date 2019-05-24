@@ -47,7 +47,6 @@ Used Modules:
 -   [Ansible Command Module](https://docs.ansible.com/ansible/latest/modules/command_module.html)
 -   [Ansible Reboot Module](https://docs.ansible.com/ansible/latest/modules/reboot_module.html)
 
-
 ## Installation
 
 Install from [Ansible Galaxy](https://galaxy.ansible.com/while_true_do/srv_kvm)
@@ -68,33 +67,36 @@ git clone https://github.com/while-true-do/ansible-role-srv_kvm.git while_true_d
 ---
 # defaults file for while_true_do.srv_kvm
 
+## Package Management
 wtd_srv_kvm_package:
   - qemu-kvm
   - libvirt
 # State can be present|latest|absent
 wtd_srv_kvm_package_state: "present"
 
-wtd_srv_kvm_service: "libvirtd"
-# State can be started|stopped
-wtd_srv_kvm_service_state: "started"
-# Enabled can be true|false
-wtd_srv_kvm_service_enabled: true
-
-# State can be present|absent
-wtd_srv_kvm_nested_state: "present"
-
-# Packages included dynamically
 wtd_srv_kvm_ksm_package:
   - ksmtuned
 # State can be present|latest|absent
 wtd_srv_kvm_ksm_package_state: "present"
+
+## Service Management
+wtd_srv_kvm_service: "libvirtd"
+# State can be started|stopped
+wtd_srv_kvm_service_state: "started"
+wtd_srv_kvm_service_enabled: true
+
 wtd_srv_kvm_ksm_service:
   - ksm
   - ksmtuned
 # State can be started|stopped
 wtd_srv_kvm_ksm_service_state: "started"
 wtd_srv_kvm_ksm_service_enabled: true
-wtd_srv_kvm_ksm_conf:
+
+## Configuration Management
+wtd_srv_kvm_conf_nested_enabled: true
+
+# State can be started|stopped
+wtd_srv_kvm_conf_ksm:
 # MONITOR_INTERVAL: 60
 # SLEEP_MSEC: 10
 # NPAGES_BOOST: 300
@@ -104,8 +106,8 @@ wtd_srv_kvm_ksm_conf:
 # THRES_COEF: 20
 # THRES_CONST: 2048
 
-# Auto Reboot when needed
-wtd_srv_kvm_reboot_enable: true
+## Host Management
+wtd_srv_kvm_reboot_enabled: true
 wtd_srv_kvm_reboot_msg: "System is going down to apply kvm configuration."
 wtd_srv_kvm_reboot_timeout: 3600
 ```
@@ -128,14 +130,14 @@ can be done in a
 
 #### Advanced
 
-Don't install ksm support and don't reboot after kvm nested configuration.
+Don't install ksm support and don't reboot after kvm installation.
 
 ```
 - hosts: all
   roles:
     - role: while_true_do.srv_kvm
-      wtd_srv_kvm_ksm_manage: false
-      wtd_srv_kvm_reboot_enable: false
+      wtd_srv_kvm_ksm_package_state: "absent"
+      wtd_srv_kvm_reboot_enabled: false
 ```
 
 ## Known Issues
