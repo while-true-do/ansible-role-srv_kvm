@@ -2,19 +2,17 @@
 # tasks file for while_true_do.srv_kvm
 
 - name: Check support for intel nesting
-  command: cat /sys/module/kvm_intel/parameters/nested
-  ignore_errors: true
-  changed_when: false
-  register: intel_nested
+  stat:
+    path: /sys/module/kvm_intel/parameters/nested
+  register: intel_nesting_support
   tags:
     - kvm
     - virtualization
 
 - name: Check support for amd nesting
-  command: cat /sys/module/kvm_amd/parameters/nested
-  ignore_errors: true
-  changed_when: false
-  register: amd_nested
+  stat:
+    path: /sys/module/kvm_amd/parameters/nested
+  register: amd_nesting_support
   tags:
     - kvm
     - virtualization
@@ -28,9 +26,7 @@
     mode: 0644
   become: true
   notify: Reboot System
-  when:
-    - intel_nested.stdout == 0 or
-      intel_nested.stdout == "Y"
+  when: intel_nesting_support.stat.exists == 1
   tags:
     - kvm
     - package
@@ -46,9 +42,7 @@
     mode: 0644
   become: true
   notify: Reboot System
-  when:
-    - amd_nested.stdout == 0 or
-      amd_nested.stdout == "Y"
+  when: amd_nesting_support.stat.exists == 1
   tags:
     - kvm
     - package
