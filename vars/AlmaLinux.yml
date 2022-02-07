@@ -1,0 +1,5 @@
+---
+# vars file for while_true_do.srv_kvm
+
+wtd_srv_kvm_ksm_package:
+  - qemu-kvm-common
